@@ -28,4 +28,4 @@ yarn-error.log*
 .mypy_cache/
 
 # database
-data/db/
+backend/data/db/
