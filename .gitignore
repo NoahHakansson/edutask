@@ -12,6 +12,8 @@ frontend/node_modules
 /.pnp
 .pnp.js
 
+# pytest
+backend/.coverage
 
 # misc
 .DS_Store
