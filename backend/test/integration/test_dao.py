@@ -6,26 +6,25 @@ import mongomock
 import unittest.mock as mock
 from unittest.mock import patch
 
+MOCK_URL = "mongomock://localhost"
+
 @pytest.fixture
-def sut_todo():
-    # mock mongoDB
-    with patch("src.util.dao.pymongo", side_effect=mongomock.MongoClient) as mockedDatabase:
-        # create DAO
-        sut_todo = dao("todo")
-        return sut_todo
-
-
-
-def test_todo_test0(sut_todo):
+def sut():
     # mock mongoDB
     with patch("src.util.dao.pymongo", side_effect=mongomock.MongoClient) as mockedDatabase:
         # create DAO
         sut = dao("todo")
+        sut.collection
+        return sut
 
-        # test
-        data = {"test0" : False}
-        result = sut.create(data)
 
-        assert result == {"test": "test"}
+
+@pytest.mark.staging
+def test_todo_test0(sut):
+    # test
+    data = {"test0" : False}
+    result = sut.create(data)
+
+    assert result == {"test": "test"}
 
 
