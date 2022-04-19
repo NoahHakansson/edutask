@@ -36,4 +36,10 @@ def test_todo_test0(sut):
 
     assert result == {"test": "test"}
 
+def test_todo_test1(sut):
+    # test
+    data = {5 : None}
+    result = sut.create(data)
+
+    assert result == {"test": "test"}
 
