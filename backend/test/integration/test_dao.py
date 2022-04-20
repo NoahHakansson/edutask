@@ -5,15 +5,15 @@ import pytest
 import unittest.mock as mock
 from test.utils.testDatabase import testDatabase
 
-sut = testDatabase
-collections = sut.getDatabase()
+collections = testDatabase.getDatabase()
 
 def test_todo_test0():
     # test
-    data = {"test0" : False}
+    sut = dao("task")
+    sut.collection = collections['task']
     
 
-    assert data == {"test": "test"}
+    assert {} == {"test": "test"}
 
 def test_todo_test1():
     # test
@@ -22,5 +22,4 @@ def test_todo_test1():
 
     assert data == {"test": "test"}
 
-sut.clearDatabase()
 

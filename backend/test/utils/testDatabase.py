@@ -10,7 +10,7 @@ from src.util.validators import getValidator
 import json
 from bson import json_util
 from bson.objectid import ObjectId
-collections = [{}]
+collections = {}
 
 class testDatabase:
 
@@ -24,21 +24,25 @@ class testDatabase:
             client = pymongo.MongoClient(MONGO_URL)
             database = client.edutask
             # Todo scheme
-            validator = getValidator("todo")
-            database.create_collection("test_todo", validator=validator)
+            if "test_todo" not in database.list_collection_names():
+                validator = getValidator("todo")
+                database.create_collection("test_todo", validator=validator)
             # task scheme
-            validator = getValidator("task")
-            database.create_collection("test_task", validator=validator)
+            if "test_task" not in database.list_collection_names():
+                validator = getValidator("task")
+                database.create_collection("test_task", validator=validator)
             # user scheme
-            validator = getValidator("user")
-            database.create_collection("test_user", validator=validator)
+            if "test_user" not in database.list_collection_names():
+                validator = getValidator("user")
+                database.create_collection("test_user", validator=validator)
             # video scheme
-            validator = getValidator("video")
-            database.create_collection("test_video", validator=validator)
-            collections.append({"todo": database["test_todo"]})
-            collections.append({"task": database['test_task']})
-            collections.append({"user": database['test_user']})
-            collections.append({"video": database['test_video']})
+            if "test_video" not in database.list_collection_names():
+                validator = getValidator("video")
+                database.create_collection("test_video", validator=validator)
+            # add all collections to dict array
+            collections = {"todo": database["test_todo"], "task":database['test_task'], "user":database['test_user'], "video":database['test_video']}
+            
+            
             return collections
 
     def clearDatabase():
