@@ -3,7 +3,7 @@ from typing import Collection
 from src.util.dao import DAO as dao
 import pytest
 import unittest.mock as mock
-from test.utils.initTestCollections import testDatabase
+from test.utils.testDatabase import testDatabase
 
 sut = testDatabase
 collections = sut.getDatabase()
