@@ -11,7 +11,7 @@ def test_todo_test0():
     mockedDatabase = mongomock.MongoClient().db
     collection_name = "todo"
     validator = getValidator(collection_name)
-    mockedDatabase.create_collection(collection_name, validator=validator)
+    mockedDatabase.create_collection(collection_name)
 
     # create DAO
     sut = dao("todo")
