@@ -18,6 +18,39 @@ def todo_sut():
     # clear database after test is run
     testDatabase.clearDatabase()
 
+def task_sut():
+    # Fixture to return task SUT
+    # create test collections
+    collections = testDatabase.getDatabase()
+    # create DAO and set it up with the test collection
+    sut = dao("task")
+    sut.collection = collections["task"]
+    yield sut
+    # clear database after test is run
+    testDatabase.clearDatabase()
+
+def user_sut():
+    # Fixture to return user SUT
+    # create test collections
+    collections = testDatabase.getDatabase()
+    # create DAO and set it up with the test collection
+    sut = dao("user")
+    sut.collection = collections["user"]
+    yield sut
+    # clear database after test is run
+    testDatabase.clearDatabase()
+
+def video_sut():
+    # Fixture to return video SUT
+    # create test collections
+    collections = testDatabase.getDatabase()
+    # create DAO and set it up with the test collection
+    sut = dao("video")
+    sut.collection = collections["video"]
+    yield sut
+    # clear database after test is run
+    testDatabase.clearDatabase()
+
 def test_todo_test0(todo_sut):
     # test
     data = {"description":"test0"}
