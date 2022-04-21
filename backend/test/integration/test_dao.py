@@ -74,64 +74,58 @@ def test_todo_test2(todo_sut):
 
 def test_task_test0(task_sut):
     # test
-    data = {"description":"test0"}
+    data = {"title":"title","description":"test0"}
     result = task_sut.create(data)
 
     assert result == {"test": "test"}
 
 def test_task_test1(task_sut):
     # test
-    data = {"description":"test1", "done": False}
+    data = {"description":"test1"}
     result = task_sut.create(data)
 
     assert result == {"test": "test"}
 
 def test_task_test2(task_sut):
     # test
-    data = {"description":5, "done": False}
+    data = {"title":5,"description":5}
     result = task_sut.create(data)
 
     assert result == {"test": "test"}
 
 def test_user_test0(user_sut):
     # test
-    data = {"description":"test0"}
+    data = {"firstname":"test", "lastname":"test", "email": "test"}
     result = user_sut.create(data)
 
     assert result == {"test": "test"}
 
 def test_user_test1(user_sut):
     # test
-    data = {"description":"test1", "done": False}
+    data = {"firstname":5, "lastname":"test", "email": "test"}
     result = user_sut.create(data)
 
     assert result == {"test": "test"}
 
 def test_user_test2(user_sut):
     # test
-    data = {"description":5, "done": False}
+    data = {"lastname":"test", "email": "test"}
     result = user_sut.create(data)
 
     assert result == {"test": "test"}
 
 def test_video_test0(video_sut):
     # test
-    data = {"description":"test0"}
+    data = {"url":"test"}
     result = video_sut.create(data)
 
     assert result == {"test": "test"}
 
-def test_todo_test1(video_sut):
+def test_video_test1(video_sut):
     # test
-    data = {"description":"test1", "done": False}
+    data = {"url": 5}
     result = video_sut.create(data)
 
     assert result == {"test": "test"}
 
-def test_todo_test2(video_sut):
-    # test
-    data = {"description":5, "done": False}
-    result = video_sut.create(data)
-
-    assert result == {"test": "test"}
 
