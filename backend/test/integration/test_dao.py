@@ -6,6 +6,9 @@ import unittest.mock as mock
 from src.util.testDatabase import testDatabase
 
 
+#######################
+###### Fixtures ######
+#####################
 @pytest.fixture
 def todo_sut():
     # Fixture to return todo SUT
@@ -54,81 +57,93 @@ def video_sut():
     # clear database after test is run
     testDatabase.clearDatabase()
 
+##################
+##### Tests #####
+################
+
+# todo SUT
 def test_todo_test0(todo_sut):
     # test
     data = {"description":"test0"}
     result = todo_sut.create(data)
 
-    assert result == {"test": "test"}
+    assert result["description"] == data["description"] 
 
 def test_todo_test1(todo_sut):
     # test
     data = {"description":"test1", "done": False}
     result = todo_sut.create(data)
 
-    assert result == {"test": "test"}
+    assert result["description"] == data["description"] \
+        and result["done"] == data["done"]
 
 def test_todo_test2(todo_sut):
-    # test
-    data = {"description":5, "done": False}
-    result = todo_sut.create(data)
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"description":5, "done": False}
+        result = todo_sut.create(data)
 
-    assert result == {"test": "test"}
 
+# task SUT
 def test_task_test0(task_sut):
     # test
     data = {"title":"title","description":"test0"}
     result = task_sut.create(data)
 
-    assert result == {"test": "test"}
+    assert result["title"] == data["title"] \
+        and result["description"] == data["description"]
 
 def test_task_test1(task_sut):
-    # test
-    data = {"description":"test1"}
-    result = task_sut.create(data)
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"description":"test1"}
+        result = task_sut.create(data)
 
-    assert result == {"test": "test"}
 
 def test_task_test2(task_sut):
-    # test
-    data = {"title":5,"description":5}
-    result = task_sut.create(data)
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"title":5,"description":5}
+        result = task_sut.create(data)
 
-    assert result == {"test": "test"}
 
+# user SUT
 def test_user_test0(user_sut):
     # test
-    data = {"firstname":"test", "lastname":"test", "email": "test"}
+    data = {"firstName":"test", "lastName":"test", "email": "test"}
     result = user_sut.create(data)
 
-    assert result == {"test": "test"}
+    assert result["firstName"] == data["firstName"] \
+        and result["lastName"] == data["lastName"] \
+        and result["email"] == data["email"]
 
 def test_user_test1(user_sut):
-    # test
-    data = {"firstname":5, "lastname":"test", "email": "test"}
-    result = user_sut.create(data)
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"firstname":5, "lastname":"test", "email": "test"}
+        result = user_sut.create(data)
 
-    assert result == {"test": "test"}
 
 def test_user_test2(user_sut):
-    # test
-    data = {"lastname":"test", "email": "test"}
-    result = user_sut.create(data)
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"lastname":"test", "email": "test"}
+        result = user_sut.create(data)
 
-    assert result == {"test": "test"}
 
+# video SUT
 def test_video_test0(video_sut):
     # test
     data = {"url":"test"}
     result = video_sut.create(data)
 
-    assert result == {"test": "test"}
+    assert result["url"] == data["url"]
 
 def test_video_test1(video_sut):
-    # test
-    data = {"url": 5}
-    result = video_sut.create(data)
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"url": 5}
+        result = video_sut.create(data)
 
-    assert result == {"test": "test"}
 
 
