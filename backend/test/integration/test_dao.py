@@ -18,6 +18,7 @@ def todo_sut():
     # clear database after test is run
     testDatabase.clearDatabase()
 
+@pytest.fixture
 def task_sut():
     # Fixture to return task SUT
     # create test collections
@@ -29,6 +30,7 @@ def task_sut():
     # clear database after test is run
     testDatabase.clearDatabase()
 
+@pytest.fixture
 def user_sut():
     # Fixture to return user SUT
     # create test collections
@@ -40,6 +42,7 @@ def user_sut():
     # clear database after test is run
     testDatabase.clearDatabase()
 
+@pytest.fixture
 def video_sut():
     # Fixture to return video SUT
     # create test collections
