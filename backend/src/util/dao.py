@@ -49,7 +49,7 @@ class DAO:
             object -- the newly created MongoDB document (parsed to a JSON object) containing the input data and an _id attribute
 
         raises:
-            WriteError - in case at least one of the validator criteria is validated
+            WriteError - in case at least one of the validator criteria is violated
         """
         localdata = dict(data)
 
