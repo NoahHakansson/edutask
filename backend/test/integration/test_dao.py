@@ -19,7 +19,7 @@ def todo_sut():
     sut.collection = collections["todo"]
     yield sut
     # clear database after test is run
-    testDatabase.clearDatabase()
+    # testDatabase.clearDatabase()
 
 @pytest.fixture
 def task_sut():
@@ -31,7 +31,7 @@ def task_sut():
     sut.collection = collections["task"]
     yield sut
     # clear database after test is run
-    testDatabase.clearDatabase()
+    # testDatabase.clearDatabase()
 
 @pytest.fixture
 def user_sut():
@@ -43,7 +43,7 @@ def user_sut():
     sut.collection = collections["user"]
     yield sut
     # clear database after test is run
-    testDatabase.clearDatabase()
+    # testDatabase.clearDatabase()
 
 @pytest.fixture
 def video_sut():
@@ -55,57 +55,11 @@ def video_sut():
     sut.collection = collections["video"]
     yield sut
     # clear database after test is run
-    testDatabase.clearDatabase()
+    # testDatabase.clearDatabase()
 
 ##################
 ##### Tests #####
 ################
-
-# todo SUT
-def test_todo_test0(todo_sut):
-    # test
-    data = {"description":"test0"}
-    result = todo_sut.create(data)
-
-    assert result["description"] == data["description"] 
-
-def test_todo_test1(todo_sut):
-    # test
-    data = {"description":"test1", "done": False}
-    result = todo_sut.create(data)
-
-    assert result["description"] == data["description"] \
-        and result["done"] == data["done"]
-
-def test_todo_test2(todo_sut):
-    # test should throw Exception
-    with pytest.raises(Exception) as e_info:
-        data = {"description":5, "done": False}
-        result = todo_sut.create(data)
-
-
-# task SUT
-def test_task_test0(task_sut):
-    # test
-    data = {"title":"title","description":"test0"}
-    result = task_sut.create(data)
-
-    assert result["title"] == data["title"] \
-        and result["description"] == data["description"]
-
-def test_task_test1(task_sut):
-    # test should throw Exception
-    with pytest.raises(Exception) as e_info:
-        data = {"description":"test1"}
-        result = task_sut.create(data)
-
-
-def test_task_test2(task_sut):
-    # test should throw Exception
-    with pytest.raises(Exception) as e_info:
-        data = {"title":5,"description":5}
-        result = task_sut.create(data)
-
 
 # user SUT
 def test_user_test0(user_sut):
@@ -131,6 +85,52 @@ def test_user_test2(user_sut):
         result = user_sut.create(data)
 
 
+# task SUT
+def test_task_test0(task_sut):
+    # test
+    data = {"title":"title","description":"test0"}
+    result = task_sut.create(data)
+
+    assert result["title"] == data["title"] \
+        and result["description"] == data["description"]
+
+def test_task_test1(task_sut):
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"description":"test1"}
+        result = task_sut.create(data)
+
+
+def test_task_test2(task_sut):
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"title":5,"description":5}
+        result = task_sut.create(data)
+
+
+# todo SUT
+def test_todo_test0(todo_sut):
+    # test
+    data = {"description":"test0"}
+    result = todo_sut.create(data)
+
+    assert result["description"] == data["description"] 
+
+def test_todo_test1(todo_sut):
+    # test
+    data = {"description":"test1", "done": False}
+    result = todo_sut.create(data)
+
+    assert result["description"] == data["description"] \
+        and result["done"] == data["done"]
+
+def test_todo_test2(todo_sut):
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"description":5, "done": False}
+        result = todo_sut.create(data)
+
+
 # video SUT
 def test_video_test0(video_sut):
     # test
@@ -145,5 +145,15 @@ def test_video_test1(video_sut):
         data = {"url": 5}
         result = video_sut.create(data)
 
+# test uniqueItems flag / duplicate item
+def test_uniqueItems_task0(task_sut):
+    # test should throw Exception
 
+    data = {"title":"title","description":"test0"}
+    result = task_sut.create(data)
+
+    # try to insert/create duplicate entry
+    with pytest.raises(Exception) as e_info:
+        data = {"title":"title","description":"test0"}
+        result = task_sut.create(data)
 
