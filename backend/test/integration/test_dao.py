@@ -19,7 +19,7 @@ def todo_sut():
     sut.collection = collections["todo"]
     yield sut
     # clear database after test is run
-    # testDatabase.clearDatabase()
+    testDatabase.clearDatabase()
 
 @pytest.fixture
 def task_sut():
@@ -31,7 +31,7 @@ def task_sut():
     sut.collection = collections["task"]
     yield sut
     # clear database after test is run
-    # testDatabase.clearDatabase()
+    testDatabase.clearDatabase()
 
 @pytest.fixture
 def user_sut():
@@ -43,7 +43,7 @@ def user_sut():
     sut.collection = collections["user"]
     yield sut
     # clear database after test is run
-    # testDatabase.clearDatabase()
+    testDatabase.clearDatabase()
 
 @pytest.fixture
 def video_sut():
@@ -55,7 +55,7 @@ def video_sut():
     sut.collection = collections["video"]
     yield sut
     # clear database after test is run
-    # testDatabase.clearDatabase()
+    testDatabase.clearDatabase()
 
 ##################
 ##### Tests #####
