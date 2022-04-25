@@ -146,14 +146,14 @@ def test_video_test1(video_sut):
         result = video_sut.create(data)
 
 # test uniqueItems flag / duplicate item
-def test_uniqueItems_task0(task_sut):
+def test_uniqueItems_task(task_sut):
     # test should throw Exception
 
-    data = {"title":"title","description":"test0"}
+    data = {"title":"title","description":"test0","categories":["test"]}
     result = task_sut.create(data)
 
-    # try to insert/create duplicate entry
+    # try to insert/create duplicate entry with 'uniqueItems = true' property
     with pytest.raises(Exception) as e_info:
-        data = {"title":"title","description":"test0"}
+        data = {"title":"title","description":"test0","categories":["test"]}
         result = task_sut.create(data)
 
