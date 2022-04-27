@@ -61,27 +61,28 @@ def video_sut():
 ##### Tests #####
 ################
 
-# todo SUT
-def test_todo_test0(todo_sut):
+# user SUT
+def test_user_test0(user_sut):
     # test
-    data = {"description":"test0"}
-    result = todo_sut.create(data)
+    data = {"firstName":"test", "lastName":"test", "email": "test"}
+    result = user_sut.create(data)
 
-    assert result["description"] == data["description"] 
+    assert result["firstName"] == data["firstName"] \
+        and result["lastName"] == data["lastName"] \
+        and result["email"] == data["email"]
 
-def test_todo_test1(todo_sut):
-    # test
-    data = {"description":"test1", "done": False}
-    result = todo_sut.create(data)
-
-    assert result["description"] == data["description"] \
-        and result["done"] == data["done"]
-
-def test_todo_test2(todo_sut):
+def test_user_test1(user_sut):
     # test should throw Exception
     with pytest.raises(Exception) as e_info:
-        data = {"description":5, "done": False}
-        result = todo_sut.create(data)
+        data = {"firstname":5, "lastname":"test", "email": "test"}
+        result = user_sut.create(data)
+
+
+def test_user_test2(user_sut):
+    # test should throw Exception
+    with pytest.raises(Exception) as e_info:
+        data = {"lastname":"test", "email": "test"}
+        result = user_sut.create(data)
 
 
 # task SUT
@@ -107,28 +108,27 @@ def test_task_test2(task_sut):
         result = task_sut.create(data)
 
 
-# user SUT
-def test_user_test0(user_sut):
+# todo SUT
+def test_todo_test0(todo_sut):
     # test
-    data = {"firstName":"test", "lastName":"test", "email": "test"}
-    result = user_sut.create(data)
+    data = {"description":"test0"}
+    result = todo_sut.create(data)
 
-    assert result["firstName"] == data["firstName"] \
-        and result["lastName"] == data["lastName"] \
-        and result["email"] == data["email"]
+    assert result["description"] == data["description"] 
 
-def test_user_test1(user_sut):
+def test_todo_test1(todo_sut):
+    # test
+    data = {"description":"test1", "done": False}
+    result = todo_sut.create(data)
+
+    assert result["description"] == data["description"] \
+        and result["done"] == data["done"]
+
+def test_todo_test2(todo_sut):
     # test should throw Exception
     with pytest.raises(Exception) as e_info:
-        data = {"firstname":5, "lastname":"test", "email": "test"}
-        result = user_sut.create(data)
-
-
-def test_user_test2(user_sut):
-    # test should throw Exception
-    with pytest.raises(Exception) as e_info:
-        data = {"lastname":"test", "email": "test"}
-        result = user_sut.create(data)
+        data = {"description":5, "done": False}
+        result = todo_sut.create(data)
 
 
 # video SUT
@@ -145,5 +145,15 @@ def test_video_test1(video_sut):
         data = {"url": 5}
         result = video_sut.create(data)
 
+# test uniqueItems flag / duplicate item
+def test_uniqueItems_task(task_sut):
+    # test should throw Exception
 
+    data = {"title":"title","description":"test0","categories":["test"]}
+    result = task_sut.create(data)
+
+    # try to insert/create duplicate entry with 'uniqueItems = true' property
+    with pytest.raises(Exception) as e_info:
+        data = {"title":"title","description":"test0","categories":["test"]}
+        result = task_sut.create(data)
 
