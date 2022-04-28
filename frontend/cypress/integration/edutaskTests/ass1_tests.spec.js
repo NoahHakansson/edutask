@@ -23,7 +23,7 @@ describe('R8UC1A', () => {
         cy.contains('testTask').click()
         cy.get('div').get('.todo-list').get('li').get('.inline-form').find('input[type=text]').type('newTodo')
         cy.contains('Add').click()
-        cy.get('div').get('.todo-list').get('li').get('.todo-item')
+        cy.get('div').get('.todo-list').get('li').get('.todo-item').each(($li, index, $lis) => {}).last().should("have.text", "newTodo✖")
     })
 
 })
