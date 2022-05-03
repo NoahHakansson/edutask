@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('R8UC1A', () => {
+describe('R8UC1', () => {
 
   // delete account and create a new one via the API, then visit the main page and login before each test.
   beforeEach(() => {
@@ -11,16 +11,16 @@ describe('R8UC1A', () => {
       url: 'http://localhost:5000/users/bymail/test@test.com',
       failOnStatusCode: false
     }).then((response) => {
-        // Only delete account if we found an account
+      // Only delete account if we found an account
       cy.log("status: ", response.status);
-      if (response.status === 200){
-          var userData = response.body;
-          var userId = userData._id.$oid;
-          cy.log("userId: ", userId);
-          // delete account
-          var deleteUrl = "http://localhost:5000/users/" + userId;
-          cy.request('DELETE', deleteUrl);
-        }
+      if (response.status === 200) {
+        var userData = response.body;
+        var userId = userData._id.$oid;
+        cy.log("userId: ", userId);
+        // delete account
+        var deleteUrl = "http://localhost:5000/users/" + userId;
+        cy.request('DELETE', deleteUrl);
+      }
     });
 
     // create new account
@@ -40,24 +40,33 @@ describe('R8UC1A', () => {
     cy.get('.submit-form').find('input[type=submit]').click();
   });
 
-  it('Should be in task creator view', () => {
+  it('Enter new todo "newTodo" and add it', () => {
+    // create task
     cy.get('.inputwrapper #title').type('testTask');
     cy.contains('Create new Task').click();
     cy.contains('testTask').click();
+    // create todo "newTodo"
     cy.get('div').get('.todo-list').get('li').get('.inline-form').find('input[type=text]').type('newTodo');
     cy.contains('Add').click();
-    cy.wait(500);
-    cy.get('div').get('.todo-list').get('li').get('.todo-item').each(($li, index, $lis) => { }).last().should('have.text', 'newTodo✖');
+    cy.wait(500); // wait needed to let the list update
+    // check that our todo exists
+    cy.get('div').get('.todo-list').get('li').get('.todo-item')
+      .each(($li, index, $lis) => { }).last().should('have.text', 'newTodo✖');
   });
 
-  it('test test test', () => {
+  it('Click add without typing a todo name', () => {
+    // create task
     cy.get('.inputwrapper #title').type('testTask');
     cy.contains('Create new Task').click();
     cy.contains('testTask').click();
-    cy.get('div').get('.todo-list').get('li').get('.inline-form').find('input[type=text]').type('newTodo');
+    // Try to create todo without entering a name
     cy.contains('Add').click();
+    cy.get('div').get('.todo-list').get('li').get('.inline-form')
+      .find('input[type=text]').should('have.css', 'border-color', 'red');
     cy.wait(500);
-    cy.get('div').get('.todo-list').get('li').get('.todo-item').each(($li, index, $lis) => { }).last().should('have.text', 'newTodo✖');
+    // check that our todo exists
+    cy.get('div').get('.todo-list').get('li').get('.todo-item')
+      .each(($li, index, $lis) => { }).last().should('have.text', 'newTodo✖');
   });
 
 });
