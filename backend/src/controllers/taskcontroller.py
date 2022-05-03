@@ -123,14 +123,17 @@ class TaskController(Controller):
         """
         try:
             user = self.users_dao.findOne(id)
-            tasks = self.dao.find(filter={'_id': user['tasks']}, toid=['_id'])
+            if 'tasks' in user:
+                tasks = self.dao.find(filter={'_id': user['tasks']}, toid=['_id'])
 
-            for task in tasks:
-                self.videos_dao.delete(id=task['video']['$oid'])
-                for todo in task['todos']:
-                    self.todos_dao.delete(id=todo['$oid'])
-                self.dao.delete(id=task['_id']['$oid'])
+                for task in tasks:
+                    self.videos_dao.delete(id=task['video']['$oid'])
+                    for todo in task['todos']:
+                        self.todos_dao.delete(id=todo['$oid'])
+                    self.dao.delete(id=task['_id']['$oid'])
 
-            return len(tasks)
+                return len(tasks)
+            else:
+                return 0
         except Exception as e:
             raise
