@@ -2,8 +2,7 @@
     "$jsonSchema": {
         "bsonType": "object",
         "required": [
-            "string-prop",
-            "boolean-prop"
+            "string-prop"
         ],
         "properties": {
             "string-prop": {
