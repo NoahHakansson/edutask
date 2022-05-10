@@ -10,49 +10,13 @@ from src.util.testDatabase import testDatabase
 ###### Fixtures ######
 #####################
 @pytest.fixture
-def todo_sut():
+def sut():
     # Fixture to return todo SUT
     # create test collections
     collections = testDatabase.getDatabase()
     # create DAO and set it up with the test collection
-    sut = dao("todo")
-    sut.collection = collections["todo"]
-    yield sut
-    # clear database after test is run
-    testDatabase.clearDatabase()
-
-@pytest.fixture
-def task_sut():
-    # Fixture to return task SUT
-    # create test collections
-    collections = testDatabase.getDatabase()
-    # create DAO and set it up with the test collection
-    sut = dao("task")
-    sut.collection = collections["task"]
-    yield sut
-    # clear database after test is run
-    testDatabase.clearDatabase()
-
-@pytest.fixture
-def user_sut():
-    # Fixture to return user SUT
-    # create test collections
-    collections = testDatabase.getDatabase()
-    # create DAO and set it up with the test collection
-    sut = dao("user")
-    sut.collection = collections["user"]
-    yield sut
-    # clear database after test is run
-    testDatabase.clearDatabase()
-
-@pytest.fixture
-def video_sut():
-    # Fixture to return video SUT
-    # create test collections
-    collections = testDatabase.getDatabase()
-    # create DAO and set it up with the test collection
-    sut = dao("video")
-    sut.collection = collections["video"]
+    sut = dao("testValidator")
+    sut.collection = collections["testValidator"]
     yield sut
     # clear database after test is run
     testDatabase.clearDatabase()

@@ -1,0 +1,19 @@
+{
+    "$jsonSchema": {
+        "bsonType": "object",
+        "required": [
+            "string-prop",
+            "boolean-prop"
+        ],
+        "properties": {
+            "string-prop": {
+                "uniqueItems": true,
+                "bsonType": "string",
+                "description": "the string test property"
+            },
+            "boolean-prop": {
+                "bsonType": "bool"
+            }
+        }
+    }
+}
