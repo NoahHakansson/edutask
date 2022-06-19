@@ -18,7 +18,7 @@ def test_valid_email():
     validationResult = sut.get_user_by_email("email@email.com")
     assert validationResult == { "email": "email@email.com"}
 
-def test_print_on_multiple_users(capsys):
+def test_warning_on_multiple_users(capsys):
     mockedDatabase = mock.MagicMock()
     # return two users with same email
     mockedDatabase.find.return_value = [{"email":"email@email.com"}, {"email":"email@email.com"}]
