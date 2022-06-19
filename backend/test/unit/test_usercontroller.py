@@ -21,7 +21,8 @@ def test_valid_email():
 def test_warning_on_multiple_users(capsys):
     mockedDatabase = mock.MagicMock()
     # return two users with same email
-    mockedDatabase.find.return_value = [{"email":"email@email.com"}, {"email":"email@email.com"}]
+    mockedDatabase.find.return_value = \
+            [{"email":"email@email.com"}, {"email":"email@email.com"}]
 
     sut = UserController(dao=mockedDatabase)
     sut.get_user_by_email("email@email.com")
