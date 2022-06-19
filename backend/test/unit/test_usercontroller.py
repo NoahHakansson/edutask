@@ -1,6 +1,7 @@
 from src.controllers.usercontroller import UserController
 
 import pytest
+from _pytest.capture import capfd
 import unittest.mock as mock
 
 def databaseOffline(param):
@@ -16,6 +17,17 @@ def test_valid_email():
     sut = UserController(dao=mockedDatabase)
     validationResult = sut.get_user_by_email("email@email.com")
     assert validationResult == { "email": "email@email.com"}
+
+def test_print_on_multiple_users(capsys):
+    mockedDatabase = mock.MagicMock()
+    # return two users with same email
+    mockedDatabase.find.return_value = [{"email":"email@email.com"}, {"email":"email@email.com"}]
+
+    sut = UserController(dao=mockedDatabase)
+    sut.get_user_by_email("email@email.com")
+    # capture stdout so we can catch the warning printed by get_user_by_email
+    out, err = capsys.readouterr()
+    assert "Error: more than one user found with mail" in out
 
 def test_invalid_email():
     mockedDatabase = mock.MagicMock()
