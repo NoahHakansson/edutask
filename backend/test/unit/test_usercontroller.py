@@ -30,7 +30,7 @@ def test_warning_on_multiple_users(capsys):
     out, err = capsys.readouterr()
     assert "Error: more than one user found with mail" in out
 
-def test_invalid_email():
+def test_email_missing_substring1():
     mockedDatabase = mock.MagicMock()
     # return empty dict because we dont expect anything from a invalid email
     # Expects an exception
@@ -38,7 +38,47 @@ def test_invalid_email():
 
     sut = UserController(dao=mockedDatabase)
     with pytest.raises(Exception) as e_info:
-        validationResult = sut.get_user_by_email("email")
+        validationResult = sut.get_user_by_email("@email.com")
+
+def test_email_missing_substring2():
+    mockedDatabase = mock.MagicMock()
+    # return empty dict because we dont expect anything from a invalid email
+    # Expects an exception
+    mockedDatabase.find.return_value = []
+
+    sut = UserController(dao=mockedDatabase)
+    with pytest.raises(Exception) as e_info:
+        validationResult = sut.get_user_by_email("email@.com")
+
+def test_email_missing_substring3():
+    mockedDatabase = mock.MagicMock()
+    # return empty dict because we dont expect anything from a invalid email
+    # Expects an exception
+    mockedDatabase.find.return_value = []
+
+    sut = UserController(dao=mockedDatabase)
+    with pytest.raises(Exception) as e_info:
+        validationResult = sut.get_user_by_email("email@email.")
+
+def test_email_missing_at_sign():
+    mockedDatabase = mock.MagicMock()
+    # return empty dict because we dont expect anything from a invalid email
+    # Expects an exception
+    mockedDatabase.find.return_value = []
+
+    sut = UserController(dao=mockedDatabase)
+    with pytest.raises(Exception) as e_info:
+        validationResult = sut.get_user_by_email("emailemail.com")
+
+def test_email_missing_dot_after_domain():
+    mockedDatabase = mock.MagicMock()
+    # return empty dict because we dont expect anything from a invalid email
+    # Expects an exception
+    mockedDatabase.find.return_value = []
+
+    sut = UserController(dao=mockedDatabase)
+    with pytest.raises(Exception) as e_info:
+        validationResult = sut.get_user_by_email("email@emailcom")
 
 def test_email_not_found():
     mockedDatabase = mock.MagicMock()
@@ -52,6 +92,7 @@ def test_email_not_found():
 
 def test_database_offline():
     mockedDatabase = mock.MagicMock()
+    # database operation fails
     # return exception as database is offline
     # Expects a database exception indicating that the database is down
     mockedDatabase.find = databaseOffline
@@ -60,4 +101,14 @@ def test_database_offline():
     with pytest.raises(Exception) as e_info:
         validationResult = sut.get_user_by_email("email@email.com")
 
+def test_database_operation_fails():
+    mockedDatabase = mock.MagicMock()
+    # database operation fails
+    # return exception as database is offline
+    # Expects a database exception indicating that the database is down
+    mockedDatabase.find = databaseOffline
+
+    sut = UserController(dao=mockedDatabase)
+    with pytest.raises(Exception) as e_info:
+        validationResult = sut.get_user_by_email("email@email.com")
 
