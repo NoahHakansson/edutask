@@ -5,7 +5,7 @@ import unittest.mock as mock
 
 def databaseOffline(param):
     # Function to mimic if a database operation failed
-    # Takes a parameter as find does too
+    # Takes a parameter as find() does too
     raise Exception("Error: Database is not accessable")
 
 def test_UC01():
